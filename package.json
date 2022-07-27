@@ -2,10 +2,10 @@
   "name": "knex-jest",
   "version": "1.0.0",
   "description": "",
-  "main": "/dist/server.js",
+  "main": "/dist/src/server.js",
   "scripts": {
     "start-watch": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/server.js\"",
-    "test": "jest"
+    "test": "jest --runInBand --detectOpenHandles --forceExit"
   },
   "author": "",
   "license": "ISC",

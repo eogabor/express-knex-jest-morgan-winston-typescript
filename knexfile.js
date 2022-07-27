@@ -1,6 +1,14 @@
 // Update with your config settings.
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
+// @ts-ignore
+const types = require("pg").types;
+const TIMESTAMPTZ_OID = 1184;
+const TIMESTAMP_OID = 1114;
+// @ts-ignore
+types.setTypeParser(TIMESTAMPTZ_OID, (val) => val);
+// @ts-ignore
+types.setTypeParser(TIMESTAMP_OID, (val) => val);
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -17,13 +25,13 @@ module.exports = {
     pool: {
       min: 0,
       max: 10,
-    },
-    migrations: {
-      directory: "./db/migrations",
-      tableName: process.env.KNEX_MIGRATION_TABLE_NAME,
-    },
-    seeds: {
-      directory: "./db/seeds",
+      // @ts-ignore
+      afterCreate: function (connection, callback) {
+        // @ts-ignore
+        connection.query("SET timezone = 'UTC';", function (err) {
+          callback(err, connection);
+        });
+      },
     },
   },
 
@@ -39,13 +47,13 @@ module.exports = {
     pool: {
       min: 0,
       max: 10,
-    },
-    migrations: {
-      directory: "./db/migrations",
-      tableName: process.env.KNEX_MIGRATION_TABLE_NAME,
-    },
-    seeds: {
-      directory: "./db/seeds",
+      // @ts-ignore
+      afterCreate: function (connection, callback) {
+        // @ts-ignore
+        connection.query("SET timezone = 'UTC';", function (err) {
+          callback(err, connection);
+        });
+      },
     },
   },
 
@@ -61,6 +69,13 @@ module.exports = {
     pool: {
       min: 0,
       max: 10,
+      // @ts-ignore
+      afterCreate: function (connection, callback) {
+        // @ts-ignore
+        connection.query("SET timezone = 'UTC';", function (err) {
+          callback(err, connection);
+        });
+      },
     },
     migrations: {
       directory: "./db/migrations",
