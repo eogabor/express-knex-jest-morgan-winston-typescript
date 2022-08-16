@@ -1,7 +1,9 @@
 import Knex from "knex";
 import * as config from "../knexfile";
 
-const knex = Knex(config.test);
+let testConfig = JSON.parse(JSON.stringify(config.test));
+testConfig.connection.database = undefined;
+const knex = Knex(testConfig);
 
 module.exports = async () => {
   try {
