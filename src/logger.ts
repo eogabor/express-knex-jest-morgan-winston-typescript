@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import winston from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 
@@ -15,7 +16,11 @@ export function initLogger() {
       winston.format.timestamp({ format: timezoned }),
       winston.format.align(),
       winston.format.printf(
-        (info) => `${info.timestamp} ${info.level}: ${info.message}`
+        (info) =>
+          `${info.timestamp} ${info.level}: ${info.message.replaceAll(
+            /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+            ""
+          )}`
       )
     ),
     handleExceptions: true,
@@ -27,9 +32,13 @@ export function initLogger() {
       winston.format.colorize(),
       winston.format.timestamp({ format: timezoned }),
       winston.format.align(),
-      winston.format.printf(
-        (info) => `${info.timestamp} ${info.level}: ${info.message}`
-      )
+      winston.format.printf((info) => {
+        return `${info.timestamp} ${info.level}: ${
+          info.level.includes("error")
+            ? chalk.hex(`#FF3131`)(info.message)
+            : info.message
+        }`;
+      })
     ),
     handleExceptions: true,
   });

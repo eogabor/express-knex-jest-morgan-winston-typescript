@@ -3,11 +3,12 @@ import express from "express";
 import morgan from "morgan";
 import { initLogger } from "./logger";
 import { routes } from "./routes";
+import { getMorganMiddleWare } from "./morgan-middleware";
 
 export const app = express();
 
 export let { logger, stream } = initLogger();
-let morganMiddleware = morgan("combined", { stream });
+let morganMiddleware = getMorganMiddleWare(stream);
 
 app.use(express.json({ limit: "5MB" }));
 app.use(cors());
