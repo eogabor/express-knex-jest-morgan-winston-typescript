@@ -36,7 +36,7 @@ export function initLogger() {
         return `${info.timestamp} ${info.level}: ${
           info.level.includes("error")
             ? chalk.hex(`#FF3131`)(info.message)
-            : info.message
+            : info.message.slice(0, 1000)
         }`;
       })
     ),
