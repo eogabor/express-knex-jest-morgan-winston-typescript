@@ -1,7 +1,7 @@
 import axios from "axios";
 import express from "express";
 
-const authUrl = "http://192.168.0.239:3800";
+const authUrl = process.env.AUTH_URL;
 
 export async function authMiddleware(
   req: express.Request,

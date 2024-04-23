@@ -13,6 +13,7 @@ declare global {
       KNEX_MIGRATION_TABLE_NAME: string;
       TEST_DATABASE_NAME: string;
       LOG_FILE_PREFIX: string;
+      AUTH_URL: string;
     }
   }
 }
